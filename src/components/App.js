@@ -9,36 +9,48 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <Query query={HELLO_QUERY}>
-            {props => {
-              console.log(props)
-              const { data, loading, error, refetch } = props
-              if (loading) {
-                return <div>Loading</div>
-              }
+        <Query query={HELLO_QUERY}>
+          {props => {
+            console.log(props)
+            const { data, loading, error, refetch } = props
+            if (loading) {
+              return <div>Loading</div>
+            }
 
-              if (error) {
-                return <div>An unexpected error occurred</div>
-              }
+            if (error) {
+              return <div>An unexpected error occurred</div>
+            }
 
-              return (
+            return (
+              <div>
+                <h1>
+                  Site Name
+                </h1>
                 <div>
-                  <p>What's your name?</p>
-                  <InputName
-                    onSubmit={name => {
-                      refetch({
-                        name,
-                      })
-                    }}
-                  />
-                  <h3>{data.hello}</h3>
+                  <select>
+                    <option>Blog 1</option>
+                    <option>Blog 2</option>
+                    <option>Blog 3</option>
+                  </select>
                 </div>
-              )
-            }}
-          </Query>
-        </div>
+                {
+                  [1, 2, 3].map((n) => (
+                    <article className="blogEntry">
+                      <h2>Article {n}</h2>
+                      <div>
+                        Author {n}
+                      </div>
+                      <p>
+                        Blog content
+                      </p>
+                    </article>
+                  )
+                  )
+                }
+              </div>
+            )
+          }}
+        </Query>
       </div>
     )
   }
