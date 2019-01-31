@@ -61,7 +61,7 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    blog: (parent, args) => db.blogs.find(id => args.id),
+    blog: (parent, args) => db.blogs.find(blog => blog.id == args.id),
     blogs: (parent, args) => db.blogs
   }
 };
