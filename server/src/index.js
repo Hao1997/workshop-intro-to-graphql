@@ -16,25 +16,29 @@ const db = {
       id: 1,
       title: "Joey's First Post",
       author: "Joey",
-      text: "Hello"
+      text: "Hello",
+      blogId: 1
     },
     {
       id: 2,
       title: "Joey's Second Post",
       author: "Joey",
-      text: "World"
+      text: "World",
+      blogId: 1
     },
     {
       id: 3,
       title: "Ross's First Post",
       author: "Joey",
-      text: "Hello"
+      text: "Hello",
+      blogId: 2
     },
     {
       id: 4,
       title: "Ross's Second Post",
       author: "Joey",
-      text: "World"
+      text: "World",
+      blogId: 2
     }
   ]
 };
