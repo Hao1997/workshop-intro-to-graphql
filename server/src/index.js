@@ -48,9 +48,17 @@ const typeDefs = `
     id: ID!
   }
 
+  type Post implements Node {
+    id: ID!
+    title: String!
+    author: String!
+    text: String!
+  }
+
   type Blog implements Node {
     id: ID!
     name: String!
+    posts: [Post!]!
   }
 
   type Query {
@@ -63,6 +71,9 @@ const resolvers = {
   Query: {
     blog: (parent, args) => db.blogs.find(blog => blog.id == args.id),
     blogs: (parent, args) => db.blogs
+  },
+  Blog: {
+    posts: (parent, args) => db.posts.filter(post => post.blogId == parent.id)
   }
 };
 
