@@ -52,7 +52,11 @@ const typeDefs = `
     title: String!
     author: String!
     text: String!
+<<<<<<< HEAD
     blog: String!
+=======
+    blog: ID!
+>>>>>>> Add postCreate mutation
   }
 
   type PostCreatePayload {
