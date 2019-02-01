@@ -48,6 +48,17 @@ const typeDefs = `
     id: ID!
   }
 
+  input PostCreateInput {
+    title: String!
+    author: String!
+    text: String!
+    blog: String!
+  }
+
+  type PostCreatePayload {
+    post: Post
+  }
+
   type Post implements Node {
     id: ID!
     title: String!
@@ -65,6 +76,10 @@ const typeDefs = `
     blog(id: ID!): Blog
     blogs: [Blog!]!
   }
+
+  type Mutation {
+    postCreate(input: PostCreateInput): PostCreatePayload!
+  }
 `;
 
 const resolvers = {
@@ -74,6 +89,21 @@ const resolvers = {
   },
   Blog: {
     posts: (parent, args) => db.posts.filter(post => post.blogId == parent.id)
+  },
+  Mutation: {
+    postCreate: (parent, args) => {
+      const { input } = args;
+      const blog = db.blogs.find(blog => blog.name === input.blog);
+
+      if (!blog) throw new Error(input.blog + " not found!");
+
+      const lastPost = db.posts[db.posts.length - 1];
+      const newPost = { id: lastPost.id + 1, blogId: blog.id, ...input };
+
+      db.posts.push(newPost);
+
+      return { post: newPost };
+    }
   }
 };
 
