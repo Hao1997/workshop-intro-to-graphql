@@ -4,6 +4,12 @@ import { Query } from "react-apollo";
 import "../styles/App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedBlogIndex: 0
+    };
+  }
   render() {
     return (
       <div className="App">
@@ -23,19 +29,19 @@ class App extends Component {
               <div>
                 <h1>Site Name</h1>
                 <div>
-                  <select>
-                    {data.blogs.map(blog => (<option key={blog.name}>{blog.name}</option>))}
+                  <select value={this.state.selectedBlogIndex} onChange={e => this.setState({ selectedBlogIndex: e.target.value })}>
+                    {data.blogs.map(
+                      (blog, i) => <option key={blog.name} value={i}>{blog.name}</option>
+                    )}
                   </select>
                 </div>
-                {
-                  [1, 2, 3].map(n => (
-                    <article key={n} className="blogEntry">
-                      <h2>Article {n}</h2>
-                      <div>Author {n}</div>
-                      <p>Article text</p>
-                    </article>
-                  ))
-                }
+                {data.blogs[this.state.selectedBlogIndex].posts.map(post => (
+                  <article key={post.title} className="blogEntry">
+                    <h2>{post.title}</h2>
+                    <div>{post.author}</div>
+                    <p>{post.text}</p>
+                  </article>
+                ))}
               </div>
             );
           }}
@@ -48,7 +54,12 @@ class App extends Component {
 const BLOGS_QUERY = gql`
   query BlogsQuery {
     blogs {
-      name
+      name,
+      posts {
+        title,
+        author,
+        text
+      }
     }
   }
 `;
