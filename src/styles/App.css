@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+div.newPostForm {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+div.newPostForm > div {
+  padding: 10px 0;
+}
+
 article.blogEntry {
   margin: 40px 0;
 }
